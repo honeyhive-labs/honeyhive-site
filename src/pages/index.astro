@@ -1,0 +1,107 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { products } from '../data/products';
+import { site } from '../data/site';
+---
+
+<Base
+  title={site.name}
+  description="혼자 쓰기 좋은 작은 앱을 만듭니다. 계정도 광고도 없이, 필요한 것만."
+>
+  <section class="hero">
+    <h1>작게 만들고, 오래 고칩니다.</h1>
+    <p>
+      혼자 쓰기 좋은 앱을 만듭니다. 계정을 만들라고 하지 않고, 광고를 붙이지 않고,
+      필요한 기능만 남깁니다.
+    </p>
+  </section>
+
+  <section aria-labelledby="products-heading">
+    <h2 id="products-heading">제품</h2>
+    <ul class="products">
+      {
+        products.map((product) => (
+          <li>
+            <a href={`/products/${product.slug}`}>
+              <Image src={product.icon} alt="" width={64} height={64} />
+              <div>
+                <p class="name">{product.name}</p>
+                <p class="summary">{product.summary}</p>
+                <p class="meta">
+                  {product.platform} · {product.storeUrl ? product.price : '출시 준비 중'}
+                </p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    margin-bottom: var(--gap-lg);
+  }
+
+  .hero h1 {
+    font-size: var(--size-2xl);
+    margin-bottom: var(--gap-sm);
+  }
+
+  .hero p {
+    color: var(--text-soft);
+    font-size: var(--size-lg);
+  }
+
+  h2 {
+    font-size: var(--size-sm);
+    color: var(--text-soft);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .products {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--gap-sm);
+  }
+
+  .products a {
+    display: flex;
+    gap: var(--gap-sm);
+    align-items: flex-start;
+    padding: var(--gap-sm);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    text-decoration: none;
+  }
+
+  .products a:hover {
+    border-color: var(--accent);
+  }
+
+  .products img {
+    border-radius: var(--radius);
+    flex-shrink: 0;
+  }
+
+  .name {
+    font-weight: 700;
+  }
+
+  .summary {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+  }
+
+  .meta {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+    margin-top: var(--gap-xs);
+  }
+</style>

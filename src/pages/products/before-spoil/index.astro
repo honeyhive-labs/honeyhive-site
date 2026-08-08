@@ -1,0 +1,227 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../../layouts/Base.astro';
+import { findProduct } from '../../../data/products';
+import list from '../../../assets/screenshots/list.png';
+import guide from '../../../assets/screenshots/guide.png';
+import hint from '../../../assets/screenshots/hint.png';
+import calendar from '../../../assets/screenshots/calendar.png';
+import edit from '../../../assets/screenshots/edit.png';
+import empty from '../../../assets/screenshots/empty.png';
+
+const product = findProduct('before-spoil')!;
+
+const shots = [
+  { src: list, caption: '상하기 전에 알려드려요' },
+  { src: guide, caption: '하루 한 통으로 묶어서' },
+  { src: hint, caption: '며칠 두면 되는지 거들어 드려요' },
+  { src: calendar, caption: '그날 상하는 것만 모아서' },
+  { src: edit, caption: '넣는 건 10초면 돼요' },
+  { src: empty, caption: '알림을 먼저 조르지 않습니다' },
+];
+
+const features = [
+  {
+    title: '알림은 하루 한 통',
+    body: '같은 날 챙길 게 셋이어도 알림은 한 번입니다. "내일 안에 먹을 게 3개 — 우유, 두부, 시금치" 며칠 전에, 몇 시에 받을지 직접 고르세요.',
+  },
+  {
+    title: '권한을 먼저 조르지 않습니다',
+    body: '앱을 열자마자 권한 창을 띄우지 않습니다. 첫 물건을 넣으신 뒤에 한 번만 여쭙고, 싫다고 하시면 다시 묻지 않습니다.',
+  },
+  {
+    title: '며칠 두면 되는지 거들어 드립니다',
+    body: '"두부"라고 적으면 "냉장에 7일쯤" 하고 알려드려요. 56가지 식재료를 냉장·냉동·실온 따로 봅니다. 소비기한이 아니라 참고값이고, 포장에 날짜가 있으면 언제나 그쪽이 우선입니다.',
+  },
+  {
+    title: '한 번 사면 끝입니다',
+    body: '무료로 100개까지 넣으실 수 있어요. 더 넣고 싶으시면 정식판 4,900원, 한 번이면 됩니다. 매달 내는 돈은 없습니다.',
+  },
+];
+---
+
+<Base title={product.name} description={product.summary} wide>
+  <section class="hero">
+    <Image src={product.icon} alt="" width={80} height={80} />
+    <h1>{product.name}</h1>
+    <p class="tagline">{product.tagline}</p>
+    <p class="summary">{product.summary}</p>
+    {
+      product.storeUrl ? (
+        <a class="cta" href={product.storeUrl}>
+          Google Play에서 받기
+        </a>
+      ) : (
+        <p class="pending">Google Play 출시를 준비하고 있습니다.</p>
+      )
+    }
+  </section>
+
+  <section class="shots" aria-label="화면 미리보기">
+    {
+      shots.map((shot) => (
+        <figure>
+          <Image src={shot.src} alt={shot.caption} width={270} height={600} />
+          <figcaption>{shot.caption}</figcaption>
+        </figure>
+      ))
+    }
+  </section>
+
+  <section class="features">
+    {
+      features.map((feature) => (
+        <article>
+          <h2>{feature.title}</h2>
+          <p>{feature.body}</p>
+        </article>
+      ))
+    }
+  </section>
+
+  <section class="more">
+    <h2>그 밖에</h2>
+    <ul>
+      <li>달력으로 그날 상하는 것만 보기</li>
+      <li>이름·보관 위치로 찾고 임박순으로 정렬하기</li>
+      <li>바코드로 이름 자동 입력 (기한 정보는 바코드에 없습니다)</li>
+      <li>개봉일 기준 알림, 백업 파일로 기기 옮기기</li>
+    </ul>
+    <p class="note">영수증 인식, 장보기 목록, 레시피 추천은 아직 없습니다.</p>
+  </section>
+
+  <nav class="doclinks" aria-label="제품 문서">
+    <a href="/products/before-spoil/privacy">개인정보처리방침</a>
+    <a href="/support">문의하기</a>
+  </nav>
+</Base>
+
+<style>
+  .hero {
+    text-align: center;
+    margin-bottom: var(--gap-lg);
+  }
+
+  .hero img {
+    margin: 0 auto var(--gap-sm);
+    border-radius: 20px;
+  }
+
+  .hero h1 {
+    font-size: var(--size-2xl);
+  }
+
+  .tagline {
+    font-size: var(--size-lg);
+    margin-top: var(--gap-xs);
+  }
+
+  .summary {
+    color: var(--text-soft);
+    margin-top: var(--gap-xs);
+  }
+
+  .cta {
+    display: inline-block;
+    margin-top: var(--gap-sm);
+    padding: 0.75rem 1.5rem;
+    background: var(--accent);
+    color: #fff;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .pending {
+    display: inline-block;
+    margin-top: var(--gap-sm);
+    padding: 0.5rem 1rem;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: var(--radius);
+    font-size: var(--size-sm);
+    font-weight: 600;
+  }
+
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap-md) var(--gap-sm);
+    margin-bottom: var(--gap-lg);
+  }
+
+  @media (max-width: 640px) {
+    .shots {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .shots figure {
+    margin: 0;
+  }
+
+  .shots img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .shots figcaption {
+    margin-top: var(--gap-xs);
+    font-size: var(--size-sm);
+    color: var(--text-soft);
+    text-align: center;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap-md);
+    margin-bottom: var(--gap-lg);
+  }
+
+  @media (max-width: 640px) {
+    .features {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .features h2 {
+    font-size: var(--size-lg);
+    margin-bottom: var(--gap-xs);
+  }
+
+  .features p {
+    color: var(--text-soft);
+  }
+
+  .more {
+    max-width: var(--content-width);
+    margin: 0 0 var(--gap-lg);
+  }
+
+  .more h2 {
+    font-size: var(--size-lg);
+    margin-bottom: var(--gap-xs);
+  }
+
+  .note {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+    margin-top: var(--gap-sm);
+  }
+
+  .doclinks {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap-md);
+    font-size: var(--size-sm);
+  }
+
+  .doclinks a {
+    color: var(--accent);
+  }
+</style>

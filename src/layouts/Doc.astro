@@ -1,0 +1,75 @@
+---
+import Base from './Base.astro';
+
+const { frontmatter } = Astro.props;
+---
+
+<Base title={frontmatter.title} description={frontmatter.description}>
+  <article class="doc">
+    <h1>{frontmatter.title}</h1>
+    {frontmatter.updated && <p class="updated">최종 수정일 {frontmatter.updated}</p>}
+    <slot />
+  </article>
+</Base>
+
+<style is:global>
+  .doc h1 {
+    font-size: var(--size-xl);
+    margin-bottom: var(--gap-xs);
+  }
+
+  .doc .updated {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+    margin-bottom: var(--gap-md);
+  }
+
+  .doc h2 {
+    font-size: var(--size-lg);
+    margin: var(--gap-md) 0 var(--gap-xs);
+  }
+
+  .doc h3 {
+    font-size: var(--size-base);
+    margin: var(--gap-sm) 0 var(--gap-xs);
+  }
+
+  .doc p,
+  .doc ul,
+  .doc ol {
+    margin-bottom: var(--gap-sm);
+  }
+
+  .doc li {
+    margin-bottom: 0.25rem;
+  }
+
+  .doc a {
+    color: var(--accent);
+  }
+
+  .doc table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--gap-sm);
+    font-size: var(--size-sm);
+  }
+
+  .doc th,
+  .doc td {
+    border: 1px solid var(--border);
+    padding: var(--gap-xs);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .doc th {
+    background: var(--bg-soft);
+  }
+
+  .doc hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: var(--gap-md) 0;
+  }
+</style>

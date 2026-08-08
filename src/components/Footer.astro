@@ -1,0 +1,53 @@
+---
+import { contact, links } from '../data/site';
+---
+
+<footer>
+  <div class="inner">
+    <p class="name">Honey Hive Labs</p>
+    <ul>
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href} rel="me noopener" target="_blank">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: var(--gap-xl);
+    font-size: var(--size-sm);
+    color: var(--text-soft);
+  }
+
+  .inner {
+    max-width: var(--wide-width);
+    margin: 0 auto;
+    padding: var(--gap-md) var(--gap-sm);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gap-sm);
+    flex-wrap: wrap;
+  }
+
+  .name {
+    font-weight: 600;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: var(--gap-sm);
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+</style>

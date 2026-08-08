@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import { contact } from '../data/site';
+import { products } from '../data/products';
+---
+
+<Base
+  title="문의"
+  description="제품에 대한 문의, 버그 신고, 기능 제안을 받습니다."
+>
+  <h1>문의</h1>
+  <p class="lead">
+    쓰시다 불편한 점, 잘 안 되는 것, 있었으면 하는 기능 — 무엇이든 편하게 보내주세요.
+    혼자 만들고 있어서 답장이 하루 이틀 걸릴 수 있습니다.
+  </p>
+
+  <p class="mail">
+    <a href={`mailto:${contact.email}`}>{contact.email}</a>
+  </p>
+
+  <section>
+    <h2>이런 걸 같이 적어주시면 빠릅니다</h2>
+    <ul>
+      <li>쓰시는 제품 이름</li>
+      <li>기기 이름과 안드로이드 버전 (설정 &gt; 휴대전화 정보)</li>
+      <li>앱 버전 (앱의 설정 화면 맨 아래)</li>
+      <li>어떤 순서로 하셨을 때 그렇게 되는지</li>
+    </ul>
+    <p class="note">
+      화면을 찍은 사진이 있으면 가장 좋습니다. 원인을 찾는 시간이 크게 줄어듭니다.
+    </p>
+  </section>
+
+  <section>
+    <h2>제품별 문서</h2>
+    <ul>
+      {
+        products.map((product) => (
+          <li>
+            <a href={`/products/${product.slug}/privacy`}>
+              {product.name} 개인정보처리방침
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  h1 {
+    font-size: var(--size-xl);
+    margin-bottom: var(--gap-sm);
+  }
+
+  .lead {
+    color: var(--text-soft);
+    margin-bottom: var(--gap-md);
+  }
+
+  .mail {
+    font-size: var(--size-lg);
+    font-weight: 600;
+    padding: var(--gap-sm);
+    background: var(--accent-soft);
+    border-radius: var(--radius);
+    text-align: center;
+    margin-bottom: var(--gap-lg);
+  }
+
+  .mail a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  section {
+    margin-bottom: var(--gap-md);
+  }
+
+  h2 {
+    font-size: var(--size-lg);
+    margin-bottom: var(--gap-xs);
+  }
+
+  li {
+    margin-bottom: 0.25rem;
+  }
+
+  .note {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+    margin-top: var(--gap-xs);
+  }
+
+  section a {
+    color: var(--accent);
+  }
+</style>

@@ -1,0 +1,53 @@
+/*
+  사이트의 색과 크기는 전부 여기에만 둔다.
+  디자인을 바꿀 때 다른 파일을 열 필요가 없도록 하기 위한 것이다.
+*/
+
+:root {
+  /* 색 — 라이트 */
+  --bg: #fdfcfa;
+  --bg-soft: #f5f2ec;
+  --surface: #ffffff;
+  --border: #e5e0d6;
+  --text: #1c1a17;
+  --text-soft: #6b655c;
+  --accent: #c8891a;
+  --accent-soft: #fdf3e0;
+
+  /* 타이포 */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Segoe UI',
+    'Malgun Gothic', 'Noto Sans KR', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --size-sm: 0.875rem;
+  --size-base: 1rem;
+  --size-lg: 1.25rem;
+  --size-xl: 1.75rem;
+  --size-2xl: 2.5rem;
+
+  /* 간격 */
+  --gap-xs: 0.5rem;
+  --gap-sm: 1rem;
+  --gap-md: 2rem;
+  --gap-lg: 4rem;
+  --gap-xl: 6rem;
+
+  /* 그 밖 */
+  --radius: 12px;
+  --content-width: 720px;
+  --wide-width: 1040px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #171614;
+    --bg-soft: #201e1b;
+    --surface: #232120;
+    --border: #38342f;
+    --text: #f0ece5;
+    --text-soft: #a09a90;
+    --accent: #e0a63c;
+    --accent-soft: #2e2618;
+  }
+}

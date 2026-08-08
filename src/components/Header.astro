@@ -1,0 +1,74 @@
+---
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+
+const links = [
+  { href: '/', label: '홈' },
+  { href: '/support', label: '문의' },
+];
+---
+
+<header>
+  <nav aria-label="주요 메뉴">
+    <a href="/" class="brand">Honey Hive Labs</a>
+    <ul>
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  nav {
+    max-width: var(--wide-width);
+    margin: 0 auto;
+    padding: var(--gap-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-sm);
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: var(--gap-sm);
+    margin: 0;
+    padding: 0;
+    font-size: var(--size-sm);
+  }
+
+  ul a {
+    color: var(--text-soft);
+    text-decoration: none;
+  }
+
+  ul a:hover {
+    color: var(--text);
+  }
+
+  ul a[aria-current='page'] {
+    color: var(--text);
+    font-weight: 600;
+  }
+</style>
