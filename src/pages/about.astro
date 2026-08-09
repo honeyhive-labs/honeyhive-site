@@ -1,0 +1,181 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile, careers, skills } from '../data/profile';
+import { products } from '../data/products';
+import { contact, links } from '../data/site';
+---
+
+<Base
+  title="소개"
+  description={`${profile.name} — 만든 것과 해 온 일.`}
+>
+  <h1>{profile.name}</h1>
+  {profile.intro && <p class="intro">{profile.intro}</p>}
+
+  <section>
+    <h2>만든 것</h2>
+    <ul class="products">
+      {
+        products.map((product) => (
+          <li>
+            <a href={`/products/${product.slug}`}>{product.name}</a>
+            <span class="desc">{product.summary}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    careers.length > 0 && (
+      <section>
+        <h2>해 온 일</h2>
+        <ol class="careers">
+          {careers.map((career) => (
+            <li>
+              <p class="company">{career.company}</p>
+              <p class="meta">
+                {career.period} · {career.role}
+              </p>
+              <ul>
+                {career.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  {
+    skills.length > 0 && (
+      <section>
+        <h2>쓰는 것</h2>
+        <dl class="skills">
+          {skills.map((group) => (
+            <div>
+              <dt>{group.label}</dt>
+              <dd>{group.items.join(', ')}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    )
+  }
+
+  <section>
+    <h2>연락</h2>
+    <ul class="links">
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href} rel="me noopener" target="_blank">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+    </ul>
+  </section>
+</Base>
+
+<style>
+  h1 {
+    font-size: var(--size-xl);
+  }
+
+  .intro {
+    color: var(--text-soft);
+    font-size: var(--size-lg);
+    margin-top: var(--gap-xs);
+  }
+
+  section {
+    margin-top: var(--gap-md);
+  }
+
+  h2 {
+    font-size: var(--size-sm);
+    color: var(--text-soft);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--gap-xs);
+  }
+
+  ul,
+  ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .products li {
+    padding: var(--gap-xs) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .products a {
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .products .desc {
+    display: block;
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+  }
+
+  .careers > li {
+    padding-bottom: var(--gap-sm);
+  }
+
+  .company {
+    font-weight: 700;
+  }
+
+  .meta {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+    margin-bottom: var(--gap-xs);
+  }
+
+  .careers ul {
+    list-style: disc;
+    padding-left: 1.1rem;
+    color: var(--text-soft);
+  }
+
+  .skills {
+    margin: 0;
+  }
+
+  .skills div {
+    display: flex;
+    gap: var(--gap-sm);
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skills dt {
+    flex: 0 0 6rem;
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+  }
+
+  .skills dd {
+    margin: 0;
+  }
+
+  .links {
+    display: flex;
+    gap: var(--gap-sm);
+    flex-wrap: wrap;
+  }
+
+  .links a {
+    color: var(--accent);
+  }
+</style>
