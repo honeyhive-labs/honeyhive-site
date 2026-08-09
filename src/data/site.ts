@@ -1,6 +1,5 @@
 export const site = {
   name: 'Honey Hive Labs',
-  tagline: '작게 만들고, 오래 고칩니다.',
   url: 'https://honeyhive-labs.com',
 };
 
