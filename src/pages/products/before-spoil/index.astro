@@ -1,7 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../../../layouts/Base.astro';
+import Timeline from '../../../components/Timeline.astro';
 import { findProduct } from '../../../data/products';
+import { timelines } from '../../../data/timeline';
 import list from '../../../assets/screenshots/list.png';
 import guide from '../../../assets/screenshots/guide.png';
 import hint from '../../../assets/screenshots/hint.png';
@@ -88,6 +90,11 @@ const features = [
       <li>개봉일 기준 알림, 백업 파일로 기기 옮기기</li>
     </ul>
     <p class="note">영수증 인식, 장보기 목록, 레시피 추천은 아직 없습니다.</p>
+  </section>
+
+  <section class="history">
+    <h2>만들어 온 과정</h2>
+    <Timeline milestones={timelines['before-spoil']} />
   </section>
 
   <nav class="doclinks" aria-label="제품 문서">
@@ -212,6 +219,16 @@ const features = [
     color: var(--text-soft);
     font-size: var(--size-sm);
     margin-top: var(--gap-sm);
+  }
+
+  .history {
+    max-width: var(--content-width);
+    margin: 0 0 var(--gap-lg);
+  }
+
+  .history h2 {
+    font-size: var(--size-lg);
+    margin-bottom: var(--gap-sm);
   }
 
   .doclinks {

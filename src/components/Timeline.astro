@@ -1,0 +1,104 @@
+---
+import type { Milestone } from '../data/timeline';
+
+interface Props {
+  milestones: Milestone[];
+}
+
+const { milestones } = Astro.props;
+---
+
+<ol class="timeline">
+  {
+    milestones.map((item) => (
+      <li class={item.status === 'planned' ? 'planned' : ''}>
+        <div class="head">
+          <span class="stage">{item.stage}</span>
+          <span class="date">{item.date}</span>
+        </div>
+        <p class="title">{item.title}</p>
+        {item.detail && <p class="detail">{item.detail}</p>}
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  li {
+    position: relative;
+    padding: 0 0 var(--gap-md) var(--gap-md);
+  }
+
+  li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  li.planned::before {
+    background: var(--bg);
+    border: 2px solid var(--border);
+  }
+
+  li:last-child {
+    padding-bottom: 0;
+  }
+
+  .head {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    font-size: var(--size-sm);
+    margin-bottom: 0.15rem;
+  }
+
+  .stage {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 0.1rem 0.55rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  li.planned .stage {
+    background: var(--bg-soft);
+    color: var(--text-soft);
+  }
+
+  .date {
+    color: var(--text-soft);
+  }
+
+  .title {
+    font-weight: 600;
+  }
+
+  .detail {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+  }
+</style>
