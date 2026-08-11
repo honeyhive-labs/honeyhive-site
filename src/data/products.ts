@@ -1,4 +1,15 @@
 import beforeSpoilIcon from '../assets/icon-before-spoil.png';
+import list from '../assets/screenshots/list.png';
+import guide from '../assets/screenshots/guide.png';
+import hint from '../assets/screenshots/hint.png';
+import calendar from '../assets/screenshots/calendar.png';
+import edit from '../assets/screenshots/edit.png';
+import empty from '../assets/screenshots/empty.png';
+
+export interface Shot {
+  src: ImageMetadata;
+  caption: string;
+}
 
 export interface Product {
   slug: string;
@@ -10,6 +21,7 @@ export interface Product {
   storeUrl: string | null;
   platform: string;
   price: string;
+  shots: Shot[];
 }
 
 export const products: Product[] = [
@@ -23,6 +35,14 @@ export const products: Product[] = [
     storeUrl: null,
     platform: 'Android',
     price: '무료 · 정식판 4,900원',
+    shots: [
+      { src: list, caption: '상하기 전에 알려드려요' },
+      { src: guide, caption: '하루 한 통으로 묶어서' },
+      { src: hint, caption: '며칠 두면 되는지 거들어 드려요' },
+      { src: calendar, caption: '그날 상하는 것만 모아서' },
+      { src: edit, caption: '넣는 건 10초면 돼요' },
+      { src: empty, caption: '알림을 먼저 조르지 않습니다' },
+    ],
   },
 ];
 

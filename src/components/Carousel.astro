@@ -1,0 +1,71 @@
+---
+interface Slide {
+  src: ImageMetadata;
+  caption: string;
+}
+
+interface Props {
+  slides: Slide[];
+  label: string;
+}
+
+const { slides, label } = Astro.props;
+const { Image } = await import('astro:assets');
+---
+
+<div class="carousel" role="region" aria-label={label} tabindex="0">
+  <ul>
+    {
+      slides.map((slide) => (
+        <li>
+          <Image src={slide.src} alt={slide.caption} width={240} height={533} />
+          <p>{slide.caption}</p>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .carousel {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* 카드 안에서 가로로만 흐르게 하고, 스크롤바는 숨긴다 */
+    scrollbar-width: none;
+    padding-bottom: var(--gap-xs);
+  }
+
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  ul {
+    display: flex;
+    gap: var(--gap-sm);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: max-content;
+  }
+
+  li {
+    scroll-snap-align: center;
+    width: 240px;
+    flex-shrink: 0;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  p {
+    margin-top: var(--gap-xs);
+    text-align: center;
+    font-size: var(--size-sm);
+    color: var(--text-soft);
+  }
+</style>

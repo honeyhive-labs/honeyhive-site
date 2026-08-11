@@ -1,101 +1,149 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import Carousel from '../components/Carousel.astro';
 import { products } from '../data/products';
 import { site } from '../data/site';
+
+const guides = [
+  { href: '/about', title: '소개', desc: '해 온 일과 만든 것' },
+  { href: '/support', title: '문의', desc: '버그 신고와 기능 제안' },
+];
 ---
 
-<Base title={site.name} description="모바일 앱을 만듭니다.">
+<Base title={site.name} description="모바일 앱을 만듭니다." wide>
   <section class="hero">
     <h1>Honey Hive Labs</h1>
     <p>모바일 앱을 만듭니다.</p>
   </section>
 
-  <section aria-labelledby="products-heading">
-    <h2 id="products-heading">제품</h2>
-    <ul class="products">
-      {
-        products.map((product) => (
-          <li>
-            <a href={`/products/${product.slug}`}>
-              <Image src={product.icon} alt="" width={64} height={64} />
-              <div>
-                <p class="name">{product.name}</p>
-                <p class="summary">{product.summary}</p>
-                <p class="meta">
-                  {product.platform} · {product.storeUrl ? product.price : '출시 준비 중'}
-                </p>
-              </div>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+  {
+    products.map((product) => (
+      <article class="feature">
+        <div class="intro">
+          <Image src={product.icon} alt="" width={88} height={88} loading="eager" />
+          <h2>{product.name}</h2>
+          <p class="tagline">{product.tagline}</p>
+          <p class="meta">
+            {product.platform} · {product.storeUrl ? product.price : '출시 준비 중'}
+          </p>
+          <a class="cta" href={`/products/${product.slug}`}>
+            자세히 보기
+          </a>
+        </div>
+
+        {product.shots.length > 0 && (
+          <Carousel slides={product.shots} label={`${product.name} 화면`} />
+        )}
+      </article>
+    ))
+  }
+
+  <section class="guides">
+    {
+      guides.map((guide) => (
+        <a href={guide.href}>
+          <p class="title">{guide.title}</p>
+          <p class="desc">{guide.desc}</p>
+        </a>
+      ))
+    }
   </section>
 </Base>
 
 <style>
   .hero {
-    margin-bottom: var(--gap-lg);
+    text-align: center;
+    padding: var(--gap-lg) 0 var(--gap-xl);
   }
 
   .hero h1 {
-    font-size: var(--size-2xl);
-    margin-bottom: var(--gap-sm);
+    font-size: clamp(2.5rem, 6vw, 3.75rem);
+    letter-spacing: -0.03em;
   }
 
   .hero p {
     color: var(--text-soft);
     font-size: var(--size-lg);
+    margin-top: var(--gap-xs);
   }
 
-  h2 {
-    font-size: var(--size-sm);
-    color: var(--text-soft);
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    margin-bottom: var(--gap-sm);
+  .feature {
+    background: var(--bg-soft);
+    border-radius: 24px;
+    padding: var(--gap-lg) var(--gap-md);
+    margin-bottom: var(--gap-md);
+    overflow: hidden;
   }
 
-  .products {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: var(--gap-sm);
+  .intro {
+    text-align: center;
+    margin-bottom: var(--gap-md);
   }
 
-  .products a {
-    display: flex;
-    gap: var(--gap-sm);
-    align-items: flex-start;
-    padding: var(--gap-sm);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface);
-    text-decoration: none;
+  .intro img {
+    margin: 0 auto var(--gap-sm);
+    border-radius: 20px;
   }
 
-  .products a:hover {
-    border-color: var(--accent);
+  .intro h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    letter-spacing: -0.02em;
   }
 
-  .products img {
-    border-radius: var(--radius);
-    flex-shrink: 0;
-  }
-
-  .name {
-    font-weight: 700;
-  }
-
-  .summary {
-    color: var(--text-soft);
-    font-size: var(--size-sm);
+  .tagline {
+    font-size: var(--size-lg);
+    margin-top: var(--gap-xs);
   }
 
   .meta {
     color: var(--text-soft);
     font-size: var(--size-sm);
     margin-top: var(--gap-xs);
+  }
+
+  .cta {
+    display: inline-block;
+    margin-top: var(--gap-sm);
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+    background: var(--text);
+    color: var(--bg);
+    text-decoration: none;
+    font-size: var(--size-sm);
+    font-weight: 600;
+  }
+
+  .cta:hover {
+    background: var(--accent);
+  }
+
+  .guides {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-sm);
+  }
+
+  .guides a {
+    display: block;
+    padding: var(--gap-md);
+    border-radius: 20px;
+    background: var(--bg-soft);
+    text-decoration: none;
+  }
+
+  .guides a:hover {
+    background: var(--accent-soft);
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: var(--size-lg);
+  }
+
+  .desc {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+    margin-top: 0.15rem;
   }
 </style>

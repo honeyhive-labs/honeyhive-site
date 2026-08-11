@@ -4,23 +4,9 @@ import Base from '../../../layouts/Base.astro';
 import Timeline from '../../../components/Timeline.astro';
 import { findProduct } from '../../../data/products';
 import { timelines } from '../../../data/timeline';
-import list from '../../../assets/screenshots/list.png';
-import guide from '../../../assets/screenshots/guide.png';
-import hint from '../../../assets/screenshots/hint.png';
-import calendar from '../../../assets/screenshots/calendar.png';
-import edit from '../../../assets/screenshots/edit.png';
-import empty from '../../../assets/screenshots/empty.png';
 
 const product = findProduct('before-spoil')!;
-
-const shots = [
-  { src: list, caption: '상하기 전에 알려드려요' },
-  { src: guide, caption: '하루 한 통으로 묶어서' },
-  { src: hint, caption: '며칠 두면 되는지 거들어 드려요' },
-  { src: calendar, caption: '그날 상하는 것만 모아서' },
-  { src: edit, caption: '넣는 건 10초면 돼요' },
-  { src: empty, caption: '알림을 먼저 조르지 않습니다' },
-];
+const shots = product.shots;
 
 const features = [
   {
