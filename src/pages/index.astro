@@ -2,26 +2,33 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Carousel from '../components/Carousel.astro';
-import { products } from '../data/products';
+import {
+  featuredProducts,
+  otherProducts,
+  kinds,
+} from '../data/products';
 import { site } from '../data/site';
 
 const guides = [
   { href: '/about', title: '소개', desc: '해 온 일과 만든 것' },
   { href: '/support', title: '문의', desc: '버그 신고와 기능 제안' },
 ];
+
+const subtitle = kinds.join(' · ');
 ---
 
-<Base title={site.name} description="모바일 앱을 만듭니다." wide>
+<Base title={site.name} description={`${subtitle}을 만듭니다.`} wide>
   <section class="hero">
     <h1>Honey Hive Labs</h1>
-    <p>모바일 앱을 만듭니다.</p>
+    <p>{subtitle}</p>
   </section>
 
   {
-    products.map((product) => (
+    featuredProducts.map((product) => (
       <article class="feature">
         <div class="intro">
           <Image src={product.icon} alt="" width={88} height={88} loading="eager" />
+          <p class="kind">{product.kind}</p>
           <h2>{product.name}</h2>
           <p class="tagline">{product.tagline}</p>
           <p class="meta">
@@ -37,6 +44,28 @@ const guides = [
         )}
       </article>
     ))
+  }
+
+  {
+    otherProducts.length > 0 && (
+      <section class="others">
+        <h2>그 밖에 만든 것</h2>
+        <ul>
+          {otherProducts.map((product) => (
+            <li>
+              <a href={`/products/${product.slug}`}>
+                <Image src={product.icon} alt="" width={56} height={56} />
+                <div>
+                  <p class="kind">{product.kind}</p>
+                  <p class="name">{product.name}</p>
+                  <p class="desc">{product.summary}</p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
   }
 
   <section class="guides">
@@ -68,6 +97,7 @@ const guides = [
     margin-top: var(--gap-xs);
   }
 
+  /* 크게 보여주는 제품 */
   .feature {
     background: var(--bg-soft);
     border-radius: 24px;
@@ -86,9 +116,16 @@ const guides = [
     border-radius: 20px;
   }
 
+  .kind {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+    letter-spacing: 0.04em;
+  }
+
   .intro h2 {
     font-size: clamp(1.75rem, 3.5vw, 2.25rem);
     letter-spacing: -0.02em;
+    margin-top: 0.15rem;
   }
 
   .tagline {
@@ -118,6 +155,59 @@ const guides = [
     background: var(--accent);
   }
 
+  /* 나머지 제품 */
+  .others {
+    margin-bottom: var(--gap-md);
+  }
+
+  .others h2 {
+    font-size: var(--size-sm);
+    color: var(--text-soft);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--gap-sm);
+  }
+
+  .others ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--gap-sm);
+  }
+
+  .others a {
+    display: flex;
+    gap: var(--gap-sm);
+    align-items: flex-start;
+    padding: var(--gap-sm);
+    border-radius: 20px;
+    background: var(--bg-soft);
+    text-decoration: none;
+    height: 100%;
+  }
+
+  .others a:hover {
+    background: var(--accent-soft);
+  }
+
+  .others img {
+    border-radius: 14px;
+    flex-shrink: 0;
+  }
+
+  .others .name {
+    font-weight: 700;
+  }
+
+  .others .desc {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+    margin-top: 0.15rem;
+  }
+
+  /* 안내 카드 */
   .guides {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -141,7 +231,7 @@ const guides = [
     font-size: var(--size-lg);
   }
 
-  .desc {
+  .guides .desc {
     color: var(--text-soft);
     font-size: var(--size-sm);
     margin-top: 0.15rem;

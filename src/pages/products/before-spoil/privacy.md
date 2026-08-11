@@ -1,5 +1,7 @@
 ---
 layout: ../../../layouts/Doc.astro
+back: /products/before-spoil
+backLabel: 상하기전에 먹자냥
 title: 상하기전에 먹자냥 개인정보처리방침
 description: 이 앱은 개인정보를 수집하지 않습니다. 입력하신 모든 정보는 기기 안에만 저장됩니다.
 updated: 2026년 8월 7일

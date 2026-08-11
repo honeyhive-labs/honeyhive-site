@@ -1,10 +1,12 @@
 ---
 import Base from './Base.astro';
+import BackLink from '../components/BackLink.astro';
 
 const { frontmatter } = Astro.props;
 ---
 
 <Base title={frontmatter.title} description={frontmatter.description}>
+  {frontmatter.back && <BackLink href={frontmatter.back} label={frontmatter.backLabel} />}
   <article class="doc">
     <h1>{frontmatter.title}</h1>
     {frontmatter.updated && <p class="updated">최종 수정일 {frontmatter.updated}</p>}

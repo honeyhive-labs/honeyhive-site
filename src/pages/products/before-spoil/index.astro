@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../../../layouts/Base.astro';
+import BackLink from '../../../components/BackLink.astro';
 import Timeline from '../../../components/Timeline.astro';
 import { findProduct } from '../../../data/products';
 import { timelines } from '../../../data/timeline';
@@ -29,8 +30,11 @@ const features = [
 ---
 
 <Base title={product.name} description={product.summary} wide>
+  <BackLink href="/" label="만든 것 전체" />
+
   <section class="hero">
     <Image src={product.icon} alt="" width={80} height={80} />
+    <p class="kind">{product.kind}</p>
     <h1>{product.name}</h1>
     <p class="tagline">{product.tagline}</p>
     <p class="summary">{product.summary}</p>
@@ -102,6 +106,12 @@ const features = [
 
   .hero h1 {
     font-size: var(--size-2xl);
+  }
+
+  .kind {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
+    letter-spacing: 0.04em;
   }
 
   .tagline {

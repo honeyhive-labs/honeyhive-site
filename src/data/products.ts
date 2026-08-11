@@ -11,9 +11,18 @@ export interface Shot {
   caption: string;
 }
 
+/** 제품의 갈래. 새 갈래가 생기면 여기에 더한다 */
+export type Kind =
+  | '모바일 앱'
+  | '웹 앱'
+  | '데스크톱 앱'
+  | '라이브러리'
+  | '도구';
+
 export interface Product {
   slug: string;
   name: string;
+  kind: Kind;
   tagline: string;
   summary: string;
   icon: ImageMetadata;
@@ -21,6 +30,8 @@ export interface Product {
   storeUrl: string | null;
   platform: string;
   price: string;
+  /** 홈에서 크게 보여줄 제품. 나머지는 작은 카드로 나열된다 */
+  featured?: boolean;
   shots: Shot[];
 }
 
@@ -28,6 +39,8 @@ export const products: Product[] = [
   {
     slug: 'before-spoil',
     name: '상하기전에 먹자냥',
+    kind: '모바일 앱',
+    featured: true,
     tagline: '사 온 걸 적어 두면, 상하기 전에 알려드립니다.',
     summary:
       '계정도 서버도 광고도 없는 유통기한 관리 앱. 적은 것은 전부 기기 안에만 남습니다.',
@@ -48,3 +61,12 @@ export const products: Product[] = [
 
 export const findProduct = (slug: string) =>
   products.find((product) => product.slug === slug);
+
+/** 홈에서 크게 보여줄 제품들 */
+export const featuredProducts = products.filter((product) => product.featured);
+
+/** 크게 보여주지 않는 나머지 */
+export const otherProducts = products.filter((product) => !product.featured);
+
+/** 지금 만들어 둔 제품의 갈래. 제품이 늘면 자동으로 늘어난다 */
+export const kinds = [...new Set(products.map((product) => product.kind))];
