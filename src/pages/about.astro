@@ -4,6 +4,7 @@ import WordCloud from '../components/WordCloud.astro';
 import {
   profile,
   story,
+  belief,
   howIWork,
   careers,
   skills,
@@ -13,12 +14,13 @@ import { products } from '../data/products';
 import { contact, links } from '../data/site';
 
 const toc = [
-  { id: 'career', label: '해 온 일' },
-  { id: 'products', label: '만든 것' },
-  { id: 'how', label: '일하는 방식' },
-  { id: 'interests', label: '요즘 보는 것' },
-  { id: 'skills', label: '쓰는 것' },
-  { id: 'contact', label: '연락' },
+  { id: 'about', label: 'About' },
+  { id: 'career', label: 'Experience' },
+  { id: 'products', label: 'Works' },
+  { id: 'how', label: 'How I Work' },
+  { id: 'interests', label: 'Interests' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'contact', label: 'Contact' },
 ];
 ---
 
@@ -26,7 +28,7 @@ const toc = [
   <div class="layout">
     <aside class="side">
       <nav aria-label="목차">
-        <p class="toc-title">목차</p>
+        <p class="toc-title">Contents</p>
         <ul>
           {
             toc.map((item) => (
@@ -46,9 +48,13 @@ const toc = [
       </header>
 
       {
-        story.length > 0 && (
-          <section class="story">
+        (story.length > 0 || belief.length > 0) && (
+          <section id="about" class="story">
+            <h2>About</h2>
             {story.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+            {belief.map((paragraph) => (
               <p>{paragraph}</p>
             ))}
           </section>
@@ -58,7 +64,7 @@ const toc = [
       {
         careers.length > 0 && (
           <section id="career">
-            <h2>해 온 일</h2>
+            <h2>Experience</h2>
             <ol class="careers">
               {careers.map((career) => (
                 <li>
@@ -80,7 +86,7 @@ const toc = [
       }
 
       <section id="products">
-        <h2>만든 것</h2>
+        <h2>Works</h2>
         <ul class="products">
           {
             products.map((product) => (
@@ -96,7 +102,7 @@ const toc = [
       {
         howIWork.length > 0 && (
           <section id="how">
-            <h2>일하는 방식</h2>
+            <h2>How I Work</h2>
             <dl class="how">
               {howIWork.map((item) => (
                 <div>
@@ -112,7 +118,7 @@ const toc = [
       {
         keywords.length > 0 && (
           <section id="interests">
-            <h2>요즘 보는 것</h2>
+            <h2>Interests</h2>
             <WordCloud keywords={keywords} />
           </section>
         )
@@ -121,7 +127,7 @@ const toc = [
       {
         skills.length > 0 && (
           <section id="skills">
-            <h2>쓰는 것</h2>
+            <h2>Skills</h2>
             <div class="skills">
               {skills.map((group) => (
                 <div class="group">
@@ -139,7 +145,7 @@ const toc = [
       }
 
       <section id="contact">
-        <h2>연락</h2>
+        <h2>Contact</h2>
         <ul class="links">
           {
             links.map((link) => (
@@ -249,12 +255,9 @@ const toc = [
     max-width: var(--prose-width);
   }
 
-  .story {
-    max-width: var(--prose-width);
-    margin-bottom: var(--gap-lg);
-  }
-
+  /* 제목의 구분선은 전체 폭으로 두고, 읽는 글만 좁게 잡는다 */
   .story p {
+    max-width: var(--prose-width);
     margin-bottom: var(--gap-sm);
   }
 
