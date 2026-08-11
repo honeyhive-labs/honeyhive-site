@@ -38,10 +38,14 @@ export const story = [
 ];
 
 /*
-  어떤 개발자이고 무엇을 추구하는지.
-  본인의 말이어야 하는 자리다 — 비워 두면 페이지에 나오지 않는다.
+  어떤 개발자이고 무엇을 추구하는지. 본인의 말이어야 하는 자리다.
+  headline 한 줄로 선언하고, body 문단으로 그게 무슨 뜻인지 받친다.
+  headline이 비어 있으면 이 부분은 페이지에 나오지 않는다.
 */
-export const belief: string[] = [];
+export const belief = {
+  headline: '',
+  body: [] as string[],
+};
 
 export const howIWork = [
   {

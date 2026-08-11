@@ -48,14 +48,15 @@ const toc = [
       </header>
 
       {
-        (story.length > 0 || belief.length > 0) && (
+        (story.length > 0 || belief.headline) && (
           <section id="about" class="story">
             <h2>About</h2>
-            {story.map((paragraph) => (
+            {belief.headline && <p class="headline">{belief.headline}</p>}
+            {belief.body.map((paragraph) => (
               <p>{paragraph}</p>
             ))}
-            {belief.map((paragraph) => (
-              <p>{paragraph}</p>
+            {story.map((paragraph) => (
+              <p class="fact">{paragraph}</p>
             ))}
           </section>
         )
@@ -259,6 +260,20 @@ const toc = [
   .story p {
     max-width: var(--prose-width);
     margin-bottom: var(--gap-sm);
+  }
+
+  /* 한 줄 선언 */
+  .story .headline {
+    font-size: var(--size-lg);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+  }
+
+  /* 경력 사실 요약은 선언보다 뒤로 물린다 */
+  .story .fact {
+    color: var(--text-soft);
+    font-size: var(--size-sm);
   }
 
   section {
